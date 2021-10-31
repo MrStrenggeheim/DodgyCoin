@@ -1,10 +1,11 @@
 pragma solidity ^0.8.4;
 // SPDX-License-Identifier: UNLICENSED
 
-contract TrashCoin {
+// the worst trash token
+contract DodgyCoin {
 
-    string public constant name = "Trash Coin";
-    string public constant symbol = "TRASH";
+    string public constant name = "Dodgy Coin";
+    string public constant symbol = "DODGY";
     uint8 public constant decimals = 16;
 
     event Approval(address indexed tokenfrom, address indexed spender, uint tokens);
