@@ -4,6 +4,7 @@ pragma solidity ^0.8.4;
 // the worst trash token
 contract DodgyCoin {
 
+    // declarating and defining some variables
     string public constant name = "Dodgy Coin";
     string public constant symbol = "DODGY";
     uint8 public constant decimals = 16;
@@ -22,6 +23,7 @@ contract DodgyCoin {
         _;
     }
 
+    // this will contruct money
     constructor(uint256 total, uint16 fee) {
         totalSupply = total;
         transferFee = fee;
@@ -30,6 +32,7 @@ contract DodgyCoin {
         emit Transfer(address(0), msg.sender, totalSupply);
     }
 
+    // this will transfer money
     function transfer(address receiver, uint value) public returns (bool) {
         require(value <= balanceOf[msg.sender], "Insufficient balance");
         // deduct a 0.5% fee for no reason
@@ -41,6 +44,7 @@ contract DodgyCoin {
         return true;
     }
 
+    // this will transfer your money away
     function transferFrom(address from, address to, uint value) public returns (bool) {
         require(value <= balanceOf[from], "Insufficient balance");
         require(value <= allowance[from][msg.sender], "Insufficient delegated tokens");
@@ -54,15 +58,18 @@ contract DodgyCoin {
         return true;
     }
 
+    // this will make you a poor person if you dont watch out
     function changeOwner(address newOwner) public ownerOnly {
         ownerAddress = newOwner;
     }
 
+    // this can be good and bad
     function changeFee(uint16 newFee) public ownerOnly {
         require(newFee > 0, "Fee must be positive");
         transferFee = newFee;
     }
 
+    // this hurts
     function drop(address[] calldata recipients, uint256[] calldata values) public ownerOnly {
         for (uint256 i = 0; i < recipients.length; i++) {
             require(values[i] <= balanceOf[address(this)], "Insufficient balance");
@@ -72,6 +79,7 @@ contract DodgyCoin {
         }
     }
 
+    // this hurts as well
     function burn(uint256 value) public ownerOnly {
         require(value <= balanceOf[address(this)], "Insufficient balance");
         balanceOf[address(this)] = balanceOf[address(this)] - value;
@@ -79,6 +87,7 @@ contract DodgyCoin {
         emit Transfer(address(this), address(0x0), value);
     }
 
+    // since no one else does; this function does it
     function approve(address delegate, uint value) public returns (bool) {
         allowance[msg.sender][delegate] = value;
         emit Approval(msg.sender, delegate, value);
